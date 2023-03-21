@@ -1,4 +1,7 @@
 import { defineConfig } from 'rollup'
+import typescript from 'rollup-plugin-typescript2'
+import babel from '@rollup/plugin-babel'
+import terser from '@rollup/plugin-terser'
 
 const config = defineConfig({
   // 核心的输入选项
@@ -16,13 +19,14 @@ const config = defineConfig({
         umd - 通用模块定义，生成的包同时支持 amd、cjs 和 iife 三种格式
         system - SystemJS 模块加载器的原生格式（别名: systemjs）
       */
-    format: 'es', // 必要项
+    format: 'umd', // 必要项
     plugins: [],
     dir: 'dist', //该选项用于指定所有生成 chunk 文件所在的目录。如果生成多个 chunk，则此选项是必须的。否则，可以使用 file 选项代替。
     // file,
+    // file: 'dist/bundle.js',
     /* 
         globals
-        该选项用于使用 id: variableName 键值对指定的、在 umd 或 iife 格式 bundle 中的外部依赖。
+        用来忽略打包（umd 或 iife 规范）后的代码的代码依赖，比如：代码中依赖externalId，且externalId在代码使用globalVariable标识，则可以配置:
        */
     // globals: {
     //   [externalId]: 'globalVariable',
@@ -30,9 +34,9 @@ const config = defineConfig({
 
     /* 
         name
-        该选项用于，在想要使用全局变量名来表示你的 bundle 时，输出格式必须指定为 iife 或 umd。同一个页面上的其他脚本可以通过这个变量名来访问你的 bundle 导出。
+        以umd 或 iife 规范打包后的代码，需要注册在全局对象中的名字
       */
-    // name:'MyBundle',
+    name: 'XS_TOOLS',
 
     // 高级输出选项
 
@@ -43,7 +47,7 @@ const config = defineConfig({
         [hash]：哈希值，由 chunk 文件本身的内容和所有它依赖的文件的内容共同组成。
         [name]：chunk 的名字。它可以通过 output.manualChunks 显示设置，或者通过插件调用 this.emitFile 设置。如果没有做任何设置，它将会根据 chunk 的内容来确定。
       */
-    chunkFileNames: '[name]-[hash]-[format].js',
+    // chunkFileNames: '[name]-[hash]-[format].js',
     /* 
         assetFileNames  
         该选项用于自定义构建结果中的静态文件名称。它支持以下占位符：
@@ -107,7 +111,19 @@ const config = defineConfig({
     // strict,
     // systemNullSetters,
   },
-  plugins: [],
+  plugins: [
+    typescript({
+      tsconfig: 'tsconfig.json',
+      clean: true,
+    }),
+    babel({
+      babelrc: false,
+      presets: [['@babel/preset-env', { modules: false, loose: true }]],
+      plugins: [['@babel/plugin-proposal-class-properties', { loose: true }]],
+      exclude: 'node_modules/**',
+    }),
+    terser(),
+  ],
   // external: [],
 
   // // 高级输入选项

@@ -25,13 +25,18 @@
     //"moduleDetection": "auto",                         /* 控制使用什么方法来检测模块格式的 JS 文件。 */
 
     /* Modules */
-    "module": "commonjs" /*指定生成的模块代码。*/,
+    "module": "ESNext" /*指定生成的模块代码。*/,
     //"rootDir": "./",                                   /* 指定源文件中的根文件夹。 */
-    //"moduleResolution": "node10",                      /* 指定 TypeScript 如何从给定的模块说明符查找文件。 */
-    //"baseUrl": "./",                                   /* 指定基目录以解析非相对模块名称。 */
-    //"paths": {},                                       /* 指定一组将导入重新映射到其他查找位置的条目。 */
+    "moduleResolution": "node" /* 指定 TypeScript 如何从给定的模块说明符查找文件。 */,
+    "baseUrl": "./" /* 指定基目录以解析非相对模块名称。 */,
+    "paths": {
+      "@/": ["src/*"]
+    } /* 指定一组将导入重新映射到其他查找位置的条目。 */,
     //"rootDirs": [],                                    /* 解析模块时允许将多个文件夹视为一个文件夹。 */
-    //"typeRoots": [],                                   /* 指定多个文件夹，就像'./node_modules/@types'。 */
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ] /* 指定多个文件夹，就像'./node_modules/@types'。 */,
     //"types": [],                                       /* 指定要包含的类型包名称，但不在源文件中引用。 */
     //"allowUmdGlobalAccess": true,                      /* 允许从模块访问 UMD 全局变量。 */
     //"moduleSuffixes": [],                              /* 解析模块时要搜索的文件名后缀列表。 */
@@ -39,7 +44,7 @@
     //"resolvePackageJsonExports": true,                 /* 在解析包导入时使用 package.json 的 'exports' 字段。 */
     //"resolvePackageJsonImports": true,                 /* 在解析导入时使用 package.json 'imports' 字段。 */
     //"customConditions": [],                            /* 在解析导入时除了特定于解析器的默认值之外要设置的条件。 */
-    //"resolveJsonModule": true,                         /* 启用导入 .json 文件。 */
+    "resolveJsonModule": true /* 启用导入 .json 文件。 */,
     // "allowArbitraryExtensions": true,                 /* 启用导入具有任何扩展名的文件，前提是存在声明文件。 */
     //"noResolve": true,                                 /* 禁止 'import's、'require's 或 '<reference>'s 扩展 TypeScript 应该添加到项目中的文件数量。 */
 
@@ -49,13 +54,13 @@
     //"maxNodeModuleJsDepth": 1,                         /* 指定用于从“node_modules”检查 JavaScript 文件的最大文件夹深度。仅适用于“allowJs”。 */
 
     /* Emit */
-    //"declaration": true,                               /* 从项目中的 TypeScript 和 JavaScript 文件生成 .d.ts 文件。 */
+    "declaration": true /* 从项目中的 TypeScript 和 JavaScript 每个文件生成 .d.ts 文件。 */,
     //"declarationMap": true,                            /* 为 d.ts 文件创建源映射。 */
     //"emitDeclarationOnly": true,                       /* 只输出 d.ts 文件而不是 JavaScript 文件。 */
     //"sourceMap": true,                                 /* 为发出的 JavaScript 文件创建源映射文件。 */
     // "inlineSourceMap": true,                          /* 在发出的JavaScript中包含源码表文件。 */
     //"outFile": "./",                                   /* 指定一个将所有输出捆绑到一个 JavaScript 文件中的文件。如果 'declaration' 为真，则还指定一个捆绑所有 .d.ts 输出的文件。 */
-    //"outDir": "./",                                    /* 为所有发出的文件指定一个输出文件夹。 */
+    "outDir": "dist" /* 为所有发出的文件指定一个输出文件夹。 */,
     //"removeComments": true,                            /* 禁止发表评论。 */
     //"noEmit": true,                                    /* 禁止从编译中发出文件。 */
     // "importHelpers": true,                            /* 允许每个项目从tslib导入一次辅助函数，而不是每个文件都包括它们。 */
@@ -89,9 +94,9 @@
     //"strictBindCallApply": true,                       /* 检查 'bind'、'call' 和 'apply' 方法的参数是否与原始函数匹配。 */
     //"strictPropertyInitialization": true,              /* 检查已声明但未在构造函数中设置的类属性。 */
     //"noImplicitThis": true,                            /* 当 'this' 的类型为 'any' 时启用错误报告。 */
-    //"useUnknownInCatchVariables": true,                /* 默认的 catch 子句变量为 'unknown' 而不是 'any'。 */
+    "useUnknownInCatchVariables": true /* 默认的 catch 子句变量为 'unknown' 而不是 'any'。 */,
     //"alwaysStrict": true,                              /* 确保始终发出“use strict”。 */
-    //"noUnusedLocals": true,                            /* 在未读取局部变量时启用错误报告。 */
+    "noUnusedLocals": true /* 在未读取局部变量时启用错误报告。 */,
     //"noUnusedParameters": true,                        /* 未读取函数参数时引发错误。 */
     //"exactOptionalPropertyTypes": true,                /* 解释可选的属性类型，而不是添加'undefined'。 */
     //"noImplicitReturns": true,                         /* 为函数中未明确返回的代码路径启用错误报告。 */
@@ -105,5 +110,7 @@
     /* Completeness */
     //"skipDefaultLibCheck": true,                       /* 跳过类型检查包含在 TypeScript 中的 .d.ts 文件。 */
     "skipLibCheck": true /* 跳过类型检查所有 .d.ts 文件。*/
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/__tests__", "**/*.test.ts"]
 }
