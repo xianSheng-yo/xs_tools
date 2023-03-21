@@ -1,0 +1,17 @@
+.vscode
+.DS_Store
+.idea
+.eslintcache
+dist
+node_modules
+npm-debug.log*
+yarn-error.log
+package-lock.json
+*.tar.gz
+jenkins.js
+nginx.template
+Dockerfile
+coverage
+build
+*.yaml
+.npmrc

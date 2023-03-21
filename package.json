@@ -1,0 +1,16 @@
+{
+  "name": "xs_tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "rollup": "rollup -c"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^3.20.0",
+    "typescript": "^5.0.2"
+  }
+}
