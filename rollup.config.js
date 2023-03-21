@@ -1,8 +1,12 @@
 import { defineConfig } from 'rollup'
 import typescript from 'rollup-plugin-typescript2'
 import babel from '@rollup/plugin-babel'
+// 压缩生成的es bundle的Rollup插件12。它可以帮助你减少代码的体积和提高性能
 import terser from '@rollup/plugin-terser'
-
+// 将CommonJS的模块转换为ES模块
+import commonjs from '@rollup/plugin-commonjs'
+// 让Rollup能够识别node_modules的第三方模块,如果需要打包，会把第三方模块也打进去。
+import resolve from '@rollup/plugin-node-resolve'
 const config = defineConfig({
   // 核心的输入选项
   input: 'src/index.ts', // 必要项
@@ -36,7 +40,7 @@ const config = defineConfig({
         name
         以umd 或 iife 规范打包后的代码，需要注册在全局对象中的名字
       */
-    name: 'XS_TOOLS',
+    name: 'XsTools',
 
     // 高级输出选项
 
@@ -122,6 +126,13 @@ const config = defineConfig({
       plugins: [['@babel/plugin-proposal-class-properties', { loose: true }]],
       exclude: 'node_modules/**',
     }),
+    resolve({
+      browser: true,
+      customResolveOptions: {
+        moduleDirectory: 'node_modules',
+      },
+    }),
+    commonjs(),
     terser(),
   ],
   // external: [],
