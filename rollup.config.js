@@ -1,5 +1,7 @@
 import { defineConfig } from 'rollup'
+import { DEFAULT_EXTENSIONS } from '@babel/core'
 import typescript from 'rollup-plugin-typescript2'
+import ttypescript from 'ttypescript'
 import babel from '@rollup/plugin-babel'
 // 压缩生成的es bundle的Rollup插件12。它可以帮助你减少代码的体积和提高性能
 import terser from '@rollup/plugin-terser'
@@ -119,8 +121,10 @@ const config = defineConfig({
     typescript({
       tsconfig: 'tsconfig.json',
       clean: true,
+      typescript: ttypescript,
     }),
     babel({
+      extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
       babelrc: false,
       presets: [['@babel/preset-env', { modules: false, loose: true }]],
       plugins: [['@babel/plugin-proposal-class-properties', { loose: true }]],

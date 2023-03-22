@@ -53,6 +53,13 @@
     //"checkJs": true,                                   /* 在类型检查的 JavaScript 文件中启用错误报告。 */
     //"maxNodeModuleJsDepth": 1,                         /* 指定用于从“node_modules”检查 JavaScript 文件的最大文件夹深度。仅适用于“allowJs”。 */
 
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ],
+
     /* Emit */
     "declaration": true /* 从项目中的 TypeScript 和 JavaScript 每个文件生成 .d.ts 文件。 */,
     //"declarationMap": true,                            /* 为 d.ts 文件创建源映射。 */
