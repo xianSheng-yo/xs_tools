@@ -17,12 +17,12 @@ module.exports = {
     },
   },
   // 启用 @typescript-eslint 插件
-  plugins: [/* 'react', 'react-hooks', */'@typescript-eslint'],
+  plugins: [/* 'react', 'react-hooks', */ '@typescript-eslint'],
   // 使用 eslint:recommended 和 prettier/@typescript-eslint进行扩展，以及 plugin:prettier/recommended 插件来与 Prettier 集成。
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'prettier/@typescript-eslint',
+    // 'prettier/@typescript-eslint', // 已经集成到prettier中了，注释以解决报错
     'plugin:prettier/recommended',
     'prettier',
   ],
@@ -48,9 +48,9 @@ module.exports = {
       {
         // vars: 'all',
         // args: 'after-used',
-        argsIgnorePattern: '^_'
+        argsIgnorePattern: '^_',
         // ignoreRestSiblings: false
-      }
+      },
     ],
     // 禁止条件表达式中出现赋值操作符
     'no-cond-assign': 2,
@@ -179,5 +179,4 @@ module.exports = {
       'react/jsx-no-undef': [2, { allowGlobals: true }], // 允许从global scope中查找全局组件定义，jsx文件不需要引用React、ReactDom等
     */
   },
-
-}
+};
