@@ -1,3 +1,3 @@
 export default function () {
-  return 'hi rollup'
+  return 'hi rollup';
 }
