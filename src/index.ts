@@ -1,3 +1,1 @@
-export default function () {
-  return 'hi rollup';
-}
+export { getURLParameter, parseURLQueryParamsToObject, parseURLQueryParamsToString } from './urlQuery';

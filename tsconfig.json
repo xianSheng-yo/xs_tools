@@ -30,7 +30,10 @@
     "moduleResolution": "node" /* 指定 TypeScript 如何从给定的模块说明符查找文件。 */,
     "baseUrl": "./" /* 指定基目录以解析非相对模块名称。 */,
     "paths": {
-      "@/": ["src/*"]
+      "@src/": ["src/*"],
+      "@utils/*": [
+        "src/utils/*"
+      ],
     } /* 指定一组将导入重新映射到其他查找位置的条目。 */,
     //"rootDirs": [],                                    /* 解析模块时允许将多个文件夹视为一个文件夹。 */
     "typeRoots": [

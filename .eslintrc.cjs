@@ -1,3 +1,6 @@
+// "off" 或 0：禁用此规则。
+// "warn" 或 1：当出现不符合规则的代码时，ESLint 将会抛出警告。
+// "error" 或 2：当出现不符合规则的代码时，ESLint 将会抛出错误并阻止代码通过。
 // eslint-config-prettier库，它可以禁用 ESLint 中与 Prettier 冲突的规则。
 module.exports = {
   env: {
@@ -40,16 +43,15 @@ module.exports = {
     '@typescript-eslint/no-empty-function': [0],
     '@typescript-eslint/no-explicit-any': [0],
     '@typescript-eslint/no-var-requires': [0],
+    '@typescript-eslint/no-inferrable-types': 'off',
 
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-unused-vars': [
       'error',
       {
-        // vars: 'all',
-        // args: 'after-used',
+        varsIgnorePattern: '^_',
         argsIgnorePattern: '^_',
-        // ignoreRestSiblings: false
       },
     ],
     // 禁止条件表达式中出现赋值操作符
