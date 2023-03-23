@@ -1,5 +1,5 @@
-import { isValidRegExp, urlRegex } from '@utils/regExp';
-import { isArray } from '@utils/check-types';
+import { isArray } from '@src/checkTypes';
+import { isValidRegExp, urlRegex } from '@src/regExp';
 
 export function getURLParameter(): URLSearchParams;
 export function getURLParameter(_name: string): string | null;

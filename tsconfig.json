@@ -30,7 +30,7 @@
     "moduleResolution": "node" /* 指定 TypeScript 如何从给定的模块说明符查找文件。 */,
     "baseUrl": "./" /* 指定基目录以解析非相对模块名称。 */,
     "paths": {
-      "@src/": ["src/*"],
+      "@src/*": ["src/*"],
       "@utils/*": [
         "src/utils/*"
       ],
