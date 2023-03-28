@@ -9,9 +9,12 @@ import terser from '@rollup/plugin-terser';
 import commonjs from '@rollup/plugin-commonjs';
 // 让Rollup能够识别node_modules的第三方模块,如果需要打包，会把第三方模块也打进去。
 import resolve from '@rollup/plugin-node-resolve';
+import del from 'rollup-plugin-delete';
+
 const config = defineConfig({
   // 核心的输入选项
   input: 'src/index.ts', // 必要项
+  // input: ['src/*/index.ts', 'src/index.ts'], // 必要项
   output: {
     // 必要项 (可以是一个数组，用于多输出的情况)
     // 核心的输出选项
@@ -118,6 +121,7 @@ const config = defineConfig({
     // systemNullSetters,
   },
   plugins: [
+    // del({ targets: 'dist/*', hook: 'buildStart' }),
     typescript({
       tsconfig: 'tsconfig.json',
       clean: true,
@@ -133,13 +137,13 @@ const config = defineConfig({
     resolve({
       browser: true,
       customResolveOptions: {
-        moduleDirectory: 'node_modules',
+        // moduleDirectory: ['node_modules'],
       },
     }),
     commonjs(),
     terser(),
   ],
-  // external: [],
+  external: ['axios'],
 
   // // 高级输入选项
   /*
