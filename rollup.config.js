@@ -133,6 +133,7 @@ const config = defineConfig({
       presets: [['@babel/preset-env', { modules: false, loose: true }]],
       plugins: [['@babel/plugin-proposal-class-properties', { loose: true }]],
       exclude: 'node_modules/**',
+      babelHelpers: 'bundled',
     }),
     resolve({
       browser: true,

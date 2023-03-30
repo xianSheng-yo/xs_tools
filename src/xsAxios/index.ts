@@ -15,6 +15,10 @@ type TInterceptor<V = any> = [
 
 export type TRequestInterceptor = TInterceptor<InternalAxiosRequestConfig>;
 export type TResponseInterceptor = TInterceptor<AxiosResponse>;
+export type TXsAxios = CreateAxiosDefaults & {
+  requestInterceptor?: TRequestInterceptor;
+  responseInterceptor?: TResponseInterceptor;
+};
 
 export class XsAxios {
   private _instance: AxiosInstance;
@@ -22,27 +26,10 @@ export class XsAxios {
   private _responseInterceptorId: number | undefined;
   private _requestInterceptor: TRequestInterceptor | undefined;
   private _responseInterceptor: TResponseInterceptor | undefined;
-  constructor(
-    options: CreateAxiosDefaults & {
-      requestInterceptor?: TRequestInterceptor;
-      responseInterceptor?: TResponseInterceptor;
-    },
+  private transformSendData<T extends Record<string, any>>(
+    method: AxiosRequestConfig['method'],
+    params: T | undefined,
   ) {
-    const { requestInterceptor = undefined, responseInterceptor = undefined, ...axiosOptions } = options;
-    this._instance = axios.create(axiosOptions);
-    if (requestInterceptor) {
-      this._requestInterceptor = requestInterceptor;
-      this._requestInterceptorId = this._instance.interceptors.request.use(...this._requestInterceptor);
-    }
-    if (responseInterceptor) {
-      this._responseInterceptor = responseInterceptor;
-      this._responseInterceptorId = this._instance.interceptors.response.use(...this._responseInterceptor);
-    }
-  }
-  get instance() {
-    return this._instance;
-  }
-  private transformSendData<T extends object>(method: AxiosRequestConfig['method'], params: T | undefined) {
     const sendData: {
       data?: any;
       params?: any;
@@ -60,7 +47,7 @@ export class XsAxios {
     }
     return sendData;
   }
-  private transformRestfulUrl<T extends object>(_url: string, params: T | undefined) {
+  private transformRestfulUrl<T extends Record<string, any>>(_url: string, params: T | undefined) {
     let url = _url.replace(/{/g, '{:');
     // 替换url中的{:id}等模板参数
     if (params && /{:\w+}/.test(url)) {
@@ -74,7 +61,28 @@ export class XsAxios {
     }
     return url;
   }
-  generateFunc<Q extends object, R = any>(_method: AxiosRequestConfig['method'], _url: string) {
+  constructor(options: TXsAxios) {
+    const { requestInterceptor = undefined, responseInterceptor = undefined, ...axiosOptions } = options;
+    this._instance = axios.create(axiosOptions);
+    if (requestInterceptor) {
+      this._requestInterceptor = requestInterceptor;
+      this._requestInterceptorId = this._instance.interceptors.request.use(...this._requestInterceptor);
+    }
+    if (responseInterceptor) {
+      this._responseInterceptor = responseInterceptor;
+      this._responseInterceptorId = this._instance.interceptors.response.use(...this._responseInterceptor);
+    }
+  }
+  get instance() {
+    return this._instance;
+  }
+  get requestInterceptorId() {
+    return this._requestInterceptorId;
+  }
+  get responseInterceptorId() {
+    return this._responseInterceptorId;
+  }
+  generateFunc<Q extends Record<string, any>, R = any>(_method: AxiosRequestConfig['method'], _url: string) {
     const method = _method?.toUpperCase();
     return (params?: Q, config?: AxiosRequestConfig) => {
       const url = this.transformRestfulUrl(_url, params);
@@ -87,13 +95,15 @@ export class XsAxios {
       });
     };
   }
-  useRequestInterceptor() {
-    this._requestInterceptor &&
-      (this._requestInterceptorId = this._instance.interceptors.request.use(...this._requestInterceptor));
+  useRequestInterceptor(requestInterceptor?: TRequestInterceptor) {
+    const _requestInterceptor = requestInterceptor || this._requestInterceptor;
+    _requestInterceptor &&
+      (this._requestInterceptorId = this._instance.interceptors.request.use(..._requestInterceptor));
   }
-  useResponseInterceptor() {
-    this._responseInterceptor &&
-      (this._responseInterceptorId = this._instance.interceptors.response.use(...this._responseInterceptor));
+  useResponseInterceptor(responseInterceptor?: TResponseInterceptor) {
+    const _responseInterceptor = responseInterceptor || this._responseInterceptor;
+    _responseInterceptor &&
+      (this._responseInterceptorId = this._instance.interceptors.response.use(..._responseInterceptor));
   }
   ejectRequestInterceptor() {
     if (this._requestInterceptorId) {
